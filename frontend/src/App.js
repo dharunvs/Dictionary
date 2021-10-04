@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./App.css";
 
 function App() {
@@ -16,6 +16,12 @@ function App() {
       word: "This is a Dictionary bot",
     },
   ]);
+
+  const dummy = useRef();
+
+  useEffect(() => {
+    dummy.current.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   const MessageElement = ({ sender, text, type, word }) => {
     if (sender === "server") {
@@ -90,8 +96,7 @@ function App() {
     <div className="App">
       <div className="appWrapper">
         <div className="chatHeader">
-          <h1>Dictionary Bot</h1>
-          <h1>...</h1>
+          <h2>Dictionary Bot</h2>
         </div>
         <div className="chatDisplay">
           {messages &&
@@ -104,8 +109,20 @@ function App() {
                 word={msg["word"]}
               />
             ))}
+          <span ref={dummy}></span>
         </div>
-        <div className="chatControls">
+        <form
+          className="chatControls"
+          onSubmit={(e) => {
+            e.preventDefault();
+            getResult();
+            setMessages((arr) => [
+              ...arr,
+              { sender: "user", text: data, type: "input" },
+            ]);
+            setData("");
+          }}
+        >
           <input
             type="text"
             value={data}
@@ -114,19 +131,8 @@ function App() {
             }}
             placeholder="Message"
           />
-          <button
-            onClick={() => {
-              getResult();
-              setMessages((arr) => [
-                ...arr,
-                { sender: "user", text: data, type: "input" },
-              ]);
-              setData("");
-            }}
-          >
-            Send
-          </button>
-        </div>
+          <button type="submit">Search</button>
+        </form>
       </div>
     </div>
   );

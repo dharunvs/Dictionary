@@ -8,22 +8,23 @@
 
 .appWrapper {
   width: 500px;
-  height: 80vh;
+  height: 90vh;
   border-radius: 20px;
   overflow: hidden;
   position: relative;
-  box-shadow: 0 0 0 2px rgb(226, 226, 226);
 }
 
 .chatHeader {
-  height: 8vh;
+  height: 50px;
+  margin-bottom: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: #251351;
 }
 
 .chatDisplay {
-  height: calc(100% - 8vh - 8vh);
+  height: calc(100% - 80px - 60px);
   width: 100%;
   overflow-y: scroll;
   overflow-x: hidden;
@@ -31,13 +32,18 @@
   flex-direction: column;
 }
 
+.chatDisplay::-webkit-scrollbar {
+  width: 12px;
+}
+.chatDisplay::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.219);
+}
 .chatControls {
-  height: 8vh;
+  height: 50px;
   width: 100%;
   position: absolute;
   bottom: 0;
   display: flex;
-  border-top: 3px solid rgb(226, 226, 226);
 }
 
 .chatControls input,
@@ -46,26 +52,37 @@
   width: 80%;
   border: none;
   outline: none;
-  padding: 10px;
+  padding: 10px 20px;
+}
+
+.chatControls input {
+  background-color: #251351;
+}
+.chatControls input::placeholder {
+  color: aliceblue;
 }
 
 .chatControls button {
   width: 20%;
+  background-color: #c97b84;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .MsgElement {
-  background-color: rgb(219, 219, 219);
-  width: fit-content;
-  max-width: 90%;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  background-color: #7d2e68;
+  max-width: 80%;
   padding: 10px 20px;
   margin: 10px 10px;
   border-radius: 15px;
+  align-self: flex-start;
 }
 
 .Msguser {
   align-self: flex-end;
+  background-color: #a85751;
 }
 
 @media screen and (max-width: 800px) {
@@ -74,7 +91,10 @@
   }
   .appWrapper {
     width: 90%;
-    height: 80vh;
+    height: 90vh;
     margin: 5vh auto 0 auto;
+  }
+  .MsgElement * {
+    font-size: smaller;
   }
 }
