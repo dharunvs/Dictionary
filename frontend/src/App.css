@@ -1,0 +1,80 @@
+.App {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.appWrapper {
+  width: 500px;
+  height: 80vh;
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 0 0 2px rgb(226, 226, 226);
+}
+
+.chatHeader {
+  height: 8vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chatDisplay {
+  height: calc(100% - 8vh - 8vh);
+  width: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.chatControls {
+  height: 8vh;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  border-top: 3px solid rgb(226, 226, 226);
+}
+
+.chatControls input,
+.chatControls button {
+  height: 100%;
+  width: 80%;
+  border: none;
+  outline: none;
+  padding: 10px;
+}
+
+.chatControls button {
+  width: 20%;
+}
+
+.MsgElement {
+  background-color: rgb(219, 219, 219);
+  width: fit-content;
+  max-width: 90%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding: 10px 20px;
+  margin: 10px 10px;
+  border-radius: 15px;
+}
+
+.Msguser {
+  align-self: flex-end;
+}
+
+@media screen and (max-width: 800px) {
+  .App {
+    display: block;
+  }
+  .appWrapper {
+    width: 90%;
+    height: 80vh;
+    margin: 5vh auto 0 auto;
+  }
+}

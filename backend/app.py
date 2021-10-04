@@ -33,16 +33,18 @@ def send_request(data):
         if cmd == "ant":
             custom_get("antonyms", data[1][1:])
         
-        elif cmd == "ex":
+        elif cmd == "exm":
             custom_get("example", data[1][1:])
         
         elif cmd == "syn":
             custom_get("synonyms", data[1][1:])
         
+        elif cmd == "def":
+            custom_get("definition", data[1][1:])
+        
         else:
             res.append({"word": "", "error": "No such commands", "type":"error"})
 
-    print(res)
     return res
 
 def analyse_input(data):
