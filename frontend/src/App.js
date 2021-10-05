@@ -7,7 +7,7 @@ function App() {
     {
       sender: "server",
       text: [
-        "/def <word> - Definition of word(s)",
+        "/help - About Bot",
         "/exm <word> - Example for word(s)",
         "/syn <word> - Synonyms of word(s)",
         "/ant <word> - Antonyms of word(s)",
@@ -31,7 +31,21 @@ function App() {
             <h3>{word}</h3>
             <h4>{type}</h4>
             {text.map((t, k) => (
-              <p key={k}>{t}</p>
+              <p key={k}>
+                {k + 1}. {t}
+              </p>
+            ))}
+          </div>
+        );
+      } else if (type === "example") {
+        return (
+          <div className={`MsgElement Msg${type} Msg${sender} `}>
+            <h3>{word}</h3>
+            <h4>{type}</h4>
+            {text.map((t, k) => (
+              <p key={k} style={{ marginBottom: "5px", marginTop: "5px" }}>
+                {k + 1}. {t}
+              </p>
             ))}
           </div>
         );
@@ -47,7 +61,24 @@ function App() {
             ))}
           </div>
         );
+      } else if (type === "Help") {
+        return (
+          <div className={`MsgElement Msg${type} Msg${sender}`}>
+            <h4>Help</h4> <br />
+            <p>Hi, I am a dictionary bot. Ill give information about words.</p>
+            <p>Type a word to get its definition.</p>
+            <br />
+            <p>These are the possible commands</p>
+            <br />
+            {text.map((t, k) => (
+              <p className="code" key={k}>
+                {t}
+              </p>
+            ))}
+          </div>
+        );
       }
+
       return (
         <div className={`MsgElement Msg${type} Msg${sender}`}>
           <h3>{word}</h3>
@@ -64,7 +95,7 @@ function App() {
   };
 
   const getResult = async () => {
-    fetch("/getdata", {
+    fetch("https://dictionary-flask.herokuapp.com/getdata", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -77,9 +108,7 @@ function App() {
         return res.json();
       })
       .then((res) => {
-        console.log(res.data);
         res.data.forEach((d) => {
-          console.log(d[d["type"]]);
           setMessages((arr) => [
             ...arr,
             {

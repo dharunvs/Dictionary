@@ -23,7 +23,7 @@
       "react-app/jest"
     ]
   },
-  "proxy": "http://127.0.0.1:4001",
+  "proxy": "https://dictionary-flask.herokuapp.com/",
   "browserslist": {
     "production": [
       ">0.2%",

@@ -1,7 +1,12 @@
 from flask import Flask, request, jsonify
 import requests
+from flask_cors import CORS, cross_origin
+
 
 app = Flask(__name__)
+
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 API_URL = "https://api.dictionaryapi.dev/api/v2/entries/en/"
 PORT = 4001
@@ -14,10 +19,13 @@ def custom_get(rtype, data):
             res.append({"word": i, "error": "No definitions found", "type": "error"})
         else:
             word = api_response[0]["word"]
-            cget = api_response[0]["meanings"][0]["definitions"][0][rtype]
+            try:
+                cget = api_response[0]["meanings"][0]["definitions"][0][rtype]
+            except:
+                cget = "Not found"
+                rtype = "error"
 
             res.append({"word": word, rtype: cget, "type":rtype})
-
 
 
 def send_request(data):
@@ -38,9 +46,17 @@ def send_request(data):
         
         elif cmd == "syn":
             custom_get("synonyms", data[1][1:])
-        
-        elif cmd == "def":
-            custom_get("definition", data[1][1:])
+
+        elif cmd == "help":
+            res.append({
+                "word": "", 
+                "Help": [
+                            "/help - About Bot",
+                            "/exm <word> - Example for word(s)",
+                            "/syn <word> - Synonyms of word(s)",
+                            "/ant <word> - Antonyms of word(s)"
+                        ],
+                "type":"Help"})
         
         else:
             res.append({"word": "", "error": "No such commands", "type":"error"})
@@ -62,6 +78,7 @@ def analyse_input(data):
 
 
 @app.route("/getdata", methods=["POST"])
+@cross_origin()
 def get_data():
     data = request.get_json()
 
@@ -70,5 +87,13 @@ def get_data():
 
     return jsonify({"data": out})
 
+@app.route("/")
+@cross_origin()
+def index():
+    return jsonify({
+        "Name": "Dictionary Bot",
+        
+    })
+
 if __name__ == "__main__":
-    app.run(debug=True, port=PORT)
+    app.run(debug=False)
